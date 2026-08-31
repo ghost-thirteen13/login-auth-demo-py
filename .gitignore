@@ -1,0 +1,13 @@
+# ===== 敏感 / 运行时文件（严禁提交）=====
+.env
+data/users.db
+
+# ===== Python =====
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+
+# ===== 系统 =====
+.DS_Store
+Thumbs.db

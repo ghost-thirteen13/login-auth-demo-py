@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>登录授权 Demo</title>
+
+  <!-- 字体：Space Grotesk（展示/数字）+ Noto Sans SC（中文正文），display=swap 防阻塞 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap">
+
+  <!-- 防闪烁：在 CSS 加载前确定主题 -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('theme');
+        if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+  </script>
+
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <!-- 极光记忆点：背景光斑 -->
+  <div class="aurora" aria-hidden="true"><span></span><span></span></div>
+
+  <nav id="nav">
+    <div class="nav-brand"><span class="brand-mark">◆</span> 登录授权 Demo</div>
+    <div class="nav-actions">
+      <button id="btn-theme" class="btn btn-icon" type="button" aria-label="切换明暗主题" title="切换明暗主题">
+        <span class="theme-icon">🌙</span>
+      </button>
+      <div id="nav-user" class="nav-user hidden">
+        <div id="user-badge" class="user-badge">
+          <span class="badge-line1" id="badge-nickname"></span>
+          <span class="badge-line2" id="badge-username"></span>
+        </div>
+        <button id="btn-logout" class="btn btn-sm">退出</button>
+      </div>
+    </div>
+  </nav>
+
+  <main id="app">
+    <!-- 登录/注册页 -->
+    <section id="page-auth" class="page">
+      <div class="card auth-card">
+        <div class="tabs">
+          <button class="tab active" data-tab="login">登录</button>
+          <button class="tab" data-tab="register">注册</button>
+        </div>
+
+        <form id="form-login" class="form">
+          <h2>登录</h2>
+          <label>用户名<input type="text" id="login-username" required autocomplete="username"></label>
+          <label>密码<input type="password" id="login-password" required autocomplete="current-password"></label>
+          <button type="submit" class="btn btn-primary">登录</button>
+          <p class="hint">管理员账号：admin / Admin@2026!（资源 B 权限）</p>
+          <p class="hint">系统初始化后仅存在 admin，普通账号请通过「注册」入口创建（默认 user 角色）</p>
+        </form>
+
+        <form id="form-register" class="form hidden">
+          <h2>注册</h2>
+          <label>用户名<input type="text" id="reg-username" required minlength="3" maxlength="20" autocomplete="off"></label>
+          <p class="field-err" id="reg-username-err"></p>
+          <label>昵称<input type="text" id="reg-nickname" maxlength="20" required autocomplete="off" placeholder="昵称为必填项，最多 20 字"></label>
+          <p class="field-err" id="reg-nickname-err"></p>
+          <label>密码<input type="password" id="reg-password" required minlength="6" autocomplete="new-password"></label>
+          <button type="submit" class="btn btn-primary">注册</button>
+          <p class="hint">用户名经 LLM 违规内容检测，含违规 / 仿冒身份名称将被拒绝</p>
+        </form>
+
+        <div id="auth-msg" class="msg" role="status" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- 资源面板 -->
+    <section id="page-dashboard" class="page hidden">
+      <div class="resource-nav">
+        <button id="btn-resource-a" class="btn btn-resource">资源 A · 社区公告板</button>
+        <button id="btn-resource-b" class="btn btn-resource" disabled>资源 B · 管理面板</button>
+      </div>
+
+      <div id="resource-content" class="resource-content">
+        <p class="placeholder">选择上方资源查看内容</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>

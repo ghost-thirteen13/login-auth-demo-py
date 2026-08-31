@@ -1,0 +1,12 @@
+# ===== 运行依赖 =====
+fastapi==0.141.1
+uvicorn[standard]==0.52.4   # [standard] 含 uvloop/httptools，Linux 生产性能更好
+python-dotenv==1.2.3        # 加载 .env
+bcrypt==5.0.0               # 密码哈希（bcrypt 72 字节上限，见 test_auth）
+PyJWT==2.13.0               # JWT 签发/验签
+httpx==0.28.1               # 异步调用 DeepSeek（OpenAI 兼容接口）+ TestClient
+pydantic==2.13.5            # 请求/响应模型校验（StrictBool 严格布尔）
+
+# ===== 测试依赖 =====
+pytest==9.1.1
+pytest-asyncio==1.4.0       # async 测试（pytest.ini 已配 asyncio_mode=auto）
